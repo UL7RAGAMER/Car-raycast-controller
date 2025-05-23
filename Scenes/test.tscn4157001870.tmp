@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=3 uid="uid://c3ohkg1xi7ytr"]
+
+[ext_resource type="PackedScene" uid="uid://ca47kp5m1g3e4" path="res://Scenes/senna.tscn" id="1_hc28a"]
+[ext_resource type="Script" uid="uid://rbni6o8dgmid" path="res://Scripts/senna.gd" id="2_x0x4d"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32rh2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_cde0r"]
+sky_material = SubResource("ProceduralSkyMaterial_32rh2")
+
+[sub_resource type="Environment" id="Environment_np5n8"]
+background_mode = 2
+sky = SubResource("Sky_cde0r")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bi53m"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="Gradient" id="Gradient_8od7v"]
+offsets = PackedFloat32Array(0, 0.52381, 0.74026, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.8, 0.488, 0.488, 0.988235, 0.797499, 0.487961, 0.48773, 0.988235, 0.769157, 0.487514, 0.484668, 0.988235)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_86m1y"]
+seed = 50
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5i438"]
+in_3d_space = true
+color_ramp = SubResource("Gradient_8od7v")
+noise = SubResource("FastNoiseLite_86m1y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2eeo0"]
+albedo_texture = SubResource("NoiseTexture2D_5i438")
+albedo_texture_force_srgb = true
+metallic_specular = 0.62
+
+[sub_resource type="BoxMesh" id="BoxMesh_0437j"]
+material = SubResource("StandardMaterial3D_2eeo0")
+size = Vector3(100, 1, 100)
+
+[node name="Main" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.592121, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.480224, -0.866347, 0.137216, 0, 0.156434, 0.987688, -0.877146, 0.474311, -0.0751235, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_np5n8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(22, 0, 0, 0, 1, 0, 0, 0, 22, 0, 0, 0)
+shape = SubResource("BoxShape3D_bi53m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(22, 0, 0, 0, 1, 0, 0, 0, 22, 0, 0, 0)
+mesh = SubResource("BoxMesh_0437j")
+
+[node name="VehicleBody3D" parent="." node_paths=PackedStringArray("RearRightWheel", "RearLeftWheel", "fmod_event_emitter_3d") instance=ExtResource("1_hc28a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.937215, 0)
+mass = 160.0
+script = ExtResource("2_x0x4d")
+STEER_SPEED_SENSITIVITY = 100.0
+ENGINEPOWER = 600
+RearRightWheel = NodePath("WheelRR")
+RearLeftWheel = NodePath("WheelRL")
+DRIFT_THRESHOLD = 22.0
+DRIFT_FRICTION = 5
+fmod_event_emitter_3d = NodePath("Camera3D/FmodEventEmitter3D")
+
+[node name="Camera3D" type="Camera3D" parent="VehicleBody3D"]
+transform = Transform3D(-1, 2.84621e-08, -8.26599e-08, 0, 0.945519, 0.325568, 8.74228e-08, 0.325568, -0.945519, 0, 2.349, -3.421)
+current = true
+
+[node name="FmodListener3D" type="FmodListener3D" parent="VehicleBody3D/Camera3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 2.84621e-08, 0.945519, 0.325568, -8.26599e-08, 0.325568, -0.945519, 0, 0, 0)
+
+[node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="VehicleBody3D/Camera3D"]
+event_name = "event:/SennaEngine"
+event_guid = "{7022665c-b1b3-4646-ac42-9dbb79a0aaeb}"
+autoplay = true
+fmod_parameters/Load/id = -3097630398083420546
+fmod_parameters/Load = 0.0
+fmod_parameters/Load/variant_type = 3
+fmod_parameters/RPM/id = 2520763146034599108
+fmod_parameters/RPM = 0.0
+fmod_parameters/RPM/variant_type = 3
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://FMOD/Desktop/Master.bank"]
+
+[editable path="VehicleBody3D"]

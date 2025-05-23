@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=3 uid="uid://crf3r8pew363e"]
+
+[ext_resource type="Script" uid="uid://efas2xqoo382" path="res://Scenes/testcar.gd" id="1_5ny5m"]
+[ext_resource type="PackedScene" uid="uid://b2vnj3o3288hh" path="res://Scenes/wheel.tscn" id="2_2u06m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sarhg"]
+albedo_color = Color(1, 0.41, 0.41, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b1e7m"]
+material = SubResource("StandardMaterial3D_sarhg")
+size = Vector3(1, 1, 3)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_epo7w"]
+points = PackedVector3Array(0.5, 0.5, 1.5, 0.5, -0.5, 1.5, 0.5, 0.5, -1.5, -0.5, 0.5, 1.5, -0.5, -0.5, 1.5, 0.5, -0.5, -1.5, -0.5, 0.5, -1.5, -0.5, -0.5, -1.5)
+
+[node name="Node3D" type="RigidBody3D"]
+mass = 100.0
+script = ExtResource("1_5ny5m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.39976, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_b1e7m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5, -0.00415476, 1, 0.676247)
+mesh = SubResource("BoxMesh_b1e7m")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.39976, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_epo7w")
+
+[node name="WheelFL" parent="." instance=ExtResource("2_2u06m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, -2)
+wheel_no = 1
+rest_distance = null
+spring_constant = 800
+spring_damping = 200
+wheel_radius = null
+traction = null
+steering = true
+force_offset = Vector3(0, 1, 0)
+
+[node name="WheelRL" parent="." instance=ExtResource("2_2u06m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 2)
+wheel_no = 3
+rest_distance = null
+spring_constant = 800
+spring_damping = 200
+wheel_radius = null
+traction = true
+steering = null
+force_offset = Vector3(0, 1, 0)
+
+[node name="WheelFR" parent="." instance=ExtResource("2_2u06m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -2)
+wheel_no = 2
+rest_distance = null
+spring_constant = 800
+spring_damping = 200
+wheel_radius = null
+traction = null
+steering = true
+force_offset = Vector3(0, 1, 0)
+
+[node name="WheelRR" parent="." instance=ExtResource("2_2u06m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 2)
+wheel_no = 4
+rest_distance = null
+spring_constant = 800
+spring_damping = 200
+wheel_radius = null
+traction = true
+steering = null
+force_offset = Vector3(0, 1, 0)

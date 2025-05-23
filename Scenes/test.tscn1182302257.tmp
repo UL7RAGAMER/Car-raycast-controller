@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=3 uid="uid://c3ohkg1xi7ytr"]
+
+[ext_resource type="Texture2D" uid="uid://dkv3allnxg6eb" path="res://Models/istockphoto-495833064-612x612.jpg" id="1_qc4db"]
+[ext_resource type="PackedScene" uid="uid://crf3r8pew363e" path="res://Scenes/testcar.tscn" id="2_8od7v"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32rh2"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_cde0r"]
+sky_material = SubResource("ProceduralSkyMaterial_32rh2")
+
+[sub_resource type="Environment" id="Environment_np5n8"]
+background_mode = 2
+sky = SubResource("Sky_cde0r")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bi53m"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8od7v"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qc4db"]
+noise = SubResource("FastNoiseLite_8od7v")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2eeo0"]
+albedo_texture = SubResource("NoiseTexture2D_qc4db")
+metallic_specular = 0.62
+uv1_scale = Vector3(14.119, 14.119, 14.119)
+uv1_offset = Vector3(0, 0.27, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0437j"]
+material = SubResource("StandardMaterial3D_2eeo0")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8od7v"]
+height = 18.34
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qc4db"]
+points = PackedVector3Array(-0.5, -9.17, 0, -0.497651, -9.17, -0.0490407, -0.497651, -9.17, 0.0489429, -0.5, 9.17, 0, -0.490407, -9.17, -0.097592, -0.497651, 9.17, -0.0490407, -0.490407, -9.17, 0.0974941, -0.497651, 9.17, 0.0489429, -0.478563, -9.17, -0.145164, -0.490407, 9.17, -0.097592, -0.478563, -9.17, 0.145067, -0.490407, 9.17, 0.0974941, -0.46202, -9.17, -0.191366, -0.478563, 9.17, -0.145164, -0.46202, -9.17, 0.191269, -0.478563, 9.17, 0.145067, -0.440975, -9.17, -0.235709, -0.46202, 9.17, -0.191366, -0.440975, -9.17, 0.235611, -0.46202, 9.17, 0.191269, -0.415818, -9.17, -0.2778, -0.440975, 9.17, -0.235709, -0.415818, -9.17, 0.277702, -0.440975, 9.17, 0.235611, -0.386551, -9.17, -0.317247, -0.415818, 9.17, -0.2778, -0.386551, -9.17, 0.31715, -0.415818, 9.17, 0.277702, -0.353563, -9.17, -0.353563, -0.386551, 9.17, -0.317247, -0.353563, -9.17, 0.353465, -0.386551, 9.17, 0.31715, -0.317247, -9.17, -0.386551, -0.353563, 9.17, -0.353563, -0.317247, -9.17, 0.386453, -0.353563, 9.17, 0.353465, -0.2778, -9.17, -0.415818, -0.317247, 9.17, -0.386551, -0.2778, -9.17, 0.41572, -0.317247, 9.17, 0.386453, -0.235709, -9.17, -0.440975, -0.2778, 9.17, -0.415818, -0.235709, -9.17, 0.440877, -0.2778, 9.17, 0.41572, -0.191366, -9.17, -0.46202, -0.235709, 9.17, -0.440975, -0.191366, -9.17, 0.461922, -0.235709, 9.17, 0.440877, -0.145164, -9.17, -0.478563, -0.191366, 9.17, -0.46202, -0.145164, -9.17, 0.478465, -0.191366, 9.17, 0.461922, -0.097592, -9.17, -0.490407, -0.145164, 9.17, -0.478563, -0.097592, -9.17, 0.490309, -0.145164, 9.17, 0.478465, -0.0490407, -9.17, -0.497651, -0.097592, 9.17, -0.490407, -0.0490407, -9.17, 0.497553, -0.097592, 9.17, 0.490309, 0, -9.17, -0.5, -0.0490407, 9.17, -0.497651, 0, -9.17, 0.5, -0.0490407, 9.17, 0.497553, 0.0489429, -9.17, -0.497651, 0, 9.17, -0.5, 0.0489429, -9.17, 0.497553, 0, 9.17, 0.5, 0.0974941, -9.17, -0.490407, 0.0489429, 9.17, -0.497651, 0.0974941, -9.17, 0.490309, 0.0489429, 9.17, 0.497553, 0.145067, -9.17, -0.478563, 0.0974941, 9.17, -0.490407, 0.145067, -9.17, 0.478465, 0.0974941, 9.17, 0.490309, 0.191269, -9.17, -0.46202, 0.145067, 9.17, -0.478563, 0.191269, -9.17, 0.461922, 0.145067, 9.17, 0.478465, 0.235611, -9.17, -0.440975, 0.191269, 9.17, -0.46202, 0.235611, -9.17, 0.440877, 0.191269, 9.17, 0.461922, 0.277702, -9.17, -0.415818, 0.235611, 9.17, -0.440975, 0.277702, -9.17, 0.41572, 0.235611, 9.17, 0.440877, 0.31715, -9.17, -0.386551, 0.277702, 9.17, -0.415818, 0.31715, -9.17, 0.386453, 0.277702, 9.17, 0.41572, 0.353465, -9.17, -0.353563, 0.31715, 9.17, -0.386551, 0.353465, -9.17, 0.353465, 0.31715, 9.17, 0.386453, 0.386453, -9.17, -0.317247, 0.353465, 9.17, -0.353563, 0.386453, -9.17, 0.31715, 0.353465, 9.17, 0.353465, 0.41572, -9.17, -0.2778, 0.386453, 9.17, -0.317247, 0.41572, -9.17, 0.277702, 0.386453, 9.17, 0.31715, 0.440877, -9.17, -0.235709, 0.41572, 9.17, -0.2778, 0.440877, -9.17, 0.235611, 0.41572, 9.17, 0.277702, 0.461922, -9.17, -0.191366, 0.440877, 9.17, -0.235709, 0.461922, -9.17, 0.191269, 0.440877, 9.17, 0.235611, 0.478465, -9.17, -0.145164, 0.461922, 9.17, -0.191366, 0.478465, -9.17, 0.145067, 0.461922, 9.17, 0.191269, 0.490309, -9.17, -0.097592, 0.478465, 9.17, -0.145164, 0.490309, -9.17, 0.0974941, 0.478465, 9.17, 0.145067, 0.497553, -9.17, -0.0490407, 0.490309, 9.17, -0.097592, 0.497553, -9.17, 0.0489429, 0.490309, 9.17, 0.0974941, 0.5, -9.17, 0, 0.497553, 9.17, -0.0490407, 0.497553, 9.17, 0.0489429, 0.5, 9.17, 0)
+
+[node name="Main" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33323, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.480224, -0.866347, 0.137216, 0, 0.156434, 0.987688, -0.877146, 0.474311, -0.0751235, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_np5n8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(22, 0, 0, 0, 1, 0, 0, 0, 22, 0, 0, 0)
+shape = SubResource("BoxShape3D_bi53m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(22, 0, 0, 0, 1, 0, 0, 0, 22, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_0437j")
+
+[node name="Sprite3D" type="Sprite3D" parent="StaticBody3D"]
+transform = Transform3D(29.434, 0, 0, 0, -1.41555e-06, -22.924, 0, 32.384, -1.00204e-06, 0, 0.553, 0)
+visible = false
+texture = ExtResource("1_qc4db")
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://FMOD/Desktop/Master.bank"]
+
+[node name="Node3D" parent="." node_paths=PackedStringArray("WheelFL", "WheelFR", "WheelRR", "WheelRL") instance=ExtResource("2_8od7v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52199, 0)
+WheelFL = NodePath("WheelFL")
+WheelFR = NodePath("WheelFR")
+WheelRR = NodePath("WheelRR")
+WheelRL = NodePath("WheelRL")
+horsepower = 100
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(0.994399, 0.0344096, -0.0999328, -2.6054e-15, 0.945519, 0.325568, 0.105691, -0.323744, 0.940223, -0.373011, 2.80798, 6.06215)
+current = true
+
+[node name="FmodListener3D" type="FmodListener3D" parent="Node3D/Camera3D"]
+transform = Transform3D(-1, 0, 8.74228e-08, 2.84621e-08, 0.945519, 0.325568, -8.26599e-08, 0.325568, -0.945519, 0, 0, 0)
+
+[node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="Node3D/Camera3D"]
+event_name = "event:/SennaEngine"
+event_guid = "{7022665c-b1b3-4646-ac42-9dbb79a0aaeb}"
+fmod_parameters/Load/id = -3097630398083420546
+fmod_parameters/Load = 0.0
+fmod_parameters/Load/variant_type = 3
+fmod_parameters/RPM/id = 2520763146034599108
+fmod_parameters/RPM = 0.0
+fmod_parameters/RPM/variant_type = 3
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.654622, 0, -0.755956, 0, 1, 0, 0.755956, 0, 0.654622, 0, 0, -23.1397)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.239291, 0)
+mesh = SubResource("CylinderMesh_8od7v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.239291, 0)
+shape = SubResource("ConvexPolygonShape3D_qc4db")
+
+[editable path="Node3D"]

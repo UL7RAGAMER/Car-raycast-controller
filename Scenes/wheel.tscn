@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2vnj3o3288hh"]
+
+[ext_resource type="Script" uid="uid://wpx0mk4x40qg" path="res://Scripts/wheel.gd" id="1_y7iat"]
+[ext_resource type="ArrayMesh" uid="uid://dc667ps3qvkpp" path="res://Tres/wheel.tres" id="2_u5up5"]
+
+[node name="Wheel" type="RayCast3D"]
+script = ExtResource("1_y7iat")
+
+[node name="Circle" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_u5up5")
+skeleton = NodePath("")
