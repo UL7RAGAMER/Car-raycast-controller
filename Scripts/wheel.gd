@@ -1,6 +1,8 @@
 extends RayCast3D
+class_name Wheels
 @export var wheel_no : int
 
+@onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
 
 @export var can_traction : bool
 @export var can_steering : bool
@@ -15,8 +17,8 @@ func _ready() -> void:
 	wheel_mesh = get_child(0)
 	wheel_dir = wheel_mesh.get_child(0)
 func _physics_process(delta: float) -> void:
-
-		
+	if !is_colliding():
+		gpu_particles_3d.emitting = false
 	var collision_point = get_collision_point()
 	calcuate_suspension(collision_point)
 	if is_colliding():
@@ -82,17 +84,12 @@ func calcuate_acceleration(collision_point):
 	if can_steering:
 		friction_force*=0.1
 	if can_traction:
-		if accel_dir< 0:
-			engine_force = ((-1 * car.horsepower/2) * (-global_basis.z))  * car.current_gear_ratio
+		if Input.is_action_pressed("brake") and velocity < 0:
+			engine_force += ((-1 * car.horsepower) * (-global_basis.z))  * car.current_gear_ratio
+		if accel_dir<0:
+			engine_force += ((-1 * car.horsepower*0.5) * (-global_basis.z))  * car.current_gear_ratio
 		if accel_dir> 0:
-			engine_force = ((1 * car.horsepower) * (-global_basis.z))  * car.current_gear_ratio
-		if Input.is_action_pressed("brake") :
-			car.can_drift = true
-			car.front_grip_bias = 2
-		else:
-			if car.is_drifting(0.1) !=-1:
-				car.can_drift = false
-				car.front_grip_bias = 1.3
+			engine_force += ((1 * car.horsepower) * (-global_basis.z))  * car.current_gear_ratio
 	var net_force = engine_force + friction_force
 	car.apply_force(net_force,global_position - car.global_position - force_offset)
 	car.apply_force(lateral_force,global_position - car.global_position)

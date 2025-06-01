@@ -48,10 +48,6 @@ Telemetery="*res://telemetery.gd"
 
 enabled=PackedStringArray("res://addons/fmod/plugin.cfg")
 
-[filesystem]
-
-import/blender/enabled=false
-
 [input]
 
 Right={
@@ -99,7 +95,3 @@ Decrease={
 
 3d/run_on_separate_thread=true
 3d/physics_engine="Jolt Physics"
-
-[rendering]
-
-anti_aliasing/quality/use_taa=true

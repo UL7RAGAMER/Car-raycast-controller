@@ -1,11 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2vnj3o3288hh"]
+[gd_scene load_steps=6 format=3 uid="uid://b2vnj3o3288hh"]
 
 [ext_resource type="Script" uid="uid://wpx0mk4x40qg" path="res://Scripts/wheel.gd" id="1_y7iat"]
 [ext_resource type="ArrayMesh" uid="uid://dc667ps3qvkpp" path="res://Tres/wheel.tres" id="2_u5up5"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5up5"]
+transparency = 1
+albedo_color = Color(0.1164, 0.1164, 0.12, 0.0431373)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u5up5"]
+emission_shape_offset = Vector3(0, -0.391, 0)
+spread = 0.0
+gravity = Vector3(0, 0, -0.755)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u5up5"]
+size = Vector2(0.231, 0.748)
+center_offset = Vector3(0, -0.38, 0)
+
 [node name="Wheel" type="RayCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.399325, 0.150746, 2.27691)
 script = ExtResource("1_y7iat")
 
 [node name="Circle" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999816, 0, 0.0191974, 0, 1, 0, -0.0191974, 0, 0.999816, 0, 0, 0)
 mesh = ExtResource("2_u5up5")
 skeleton = NodePath("")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_u5up5")
+emitting = false
+amount = 10000
+lifetime = 3.65
+preprocess = 0.3
+fixed_fps = 120
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_u5up5")
+draw_pass_1 = SubResource("PlaneMesh_u5up5")

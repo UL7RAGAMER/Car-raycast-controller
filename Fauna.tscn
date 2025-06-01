@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://o7moky1jklgk"]
+
+[ext_resource type="Script" uid="uid://skw81dayrpgl" path="res://multi_mesh_instance_3d.gd" id="2_cvoav"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2kp3r"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0loke"]
+width = 1123
+height = 1123
+in_3d_space = true
+seamless = true
+noise = SubResource("FastNoiseLite_2kp3r")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D"]
+script = ExtResource("2_cvoav")
+noise = SubResource("NoiseTexture2D_0loke")

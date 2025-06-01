@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://xm56omfa3sd0"]
+
+[ext_resource type="PackedScene" uid="uid://clv8i6h1f3dmc" path="res://track.blend" id="1_7h0kd"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="track" parent="." instance=ExtResource("1_7h0kd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 88.8156, 32.4923, 2.94059)
+
+[editable path="track"]
