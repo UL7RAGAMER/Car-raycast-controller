@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3ohkg1xi7ytr"]
+[gd_scene load_steps=9 format=3 uid="uid://c3ohkg1xi7ytr"]
 
 [ext_resource type="Script" uid="uid://bsbmqifb6kjui" path="res://telemetery.gd" id="1_ys1qc"]
 [ext_resource type="PackedScene" uid="uid://crf3r8pew363e" path="res://Scenes/senna.tscn" id="2_8od7v"]
+[ext_resource type="FontFile" uid="uid://d1duonqfygulb" path="res://Scripts/Dashhorizon-eZ5wg.otf" id="3_ys1qc"]
 [ext_resource type="PackedScene" uid="uid://o6mku7rhft78" path="res://track_1.tscn" id="4_ys1qc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32rh2"]
@@ -17,11 +18,19 @@ sky = SubResource("Sky_cde0r")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="Curve" id="Curve_qc4db"]
+_limits = [0.0, 1.0, -1.0, 1.0]
+_data = [Vector2(-1, 0.1), 0.0, 0.0, 0, 0, Vector2(0.00220752, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Main" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33323, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.480224, -0.866347, 0.137216, 0, 0.156434, 0.987688, -0.877146, 0.474311, -0.0751235, 0, 0, 0)
+light_color = Color(1, 0.983734, 0.949219, 1)
+light_energy = 1.325
+light_indirect_energy = 6.61
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -32,14 +41,19 @@ script = ExtResource("1_ys1qc")
 bank_paths = ["res://FMOD/Desktop/Master.bank"]
 
 [node name="Node3D" parent="." node_paths=PackedStringArray("WheelFL", "WheelFR", "WheelRR", "WheelRL", "fmod_event_emitter_3d") instance=ExtResource("2_8od7v")]
-transform = Transform3D(0.0746649, 0, 0.997209, 0, 1, 0, -0.997209, 0, 0.0746649, -11.8255, 3.51667, -9.6423)
+transform = Transform3D(0.0746649, 0, 0.997209, 0, 1, 0, -0.997209, 0, 0.0746649, 252.442, 3.51667, -122.102)
 horsepower = 900
 WheelFL = NodePath("WheelFL")
 WheelFR = NodePath("WheelFR")
 WheelRR = NodePath("WheelRR")
 WheelRL = NodePath("WheelRL")
-fmod_event_emitter_3d = NodePath("Camera3D/FmodEventEmitter3D")
+fmod_event_emitter_3d = NodePath("Node3D/Camera3D/FmodEventEmitter3D")
+rest_distance = 0.4
 turn_radius = 3.287
+cam_curve = SubResource("Curve_qc4db")
+
+[node name="Node3D" parent="Node3D" index="6"]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -48,16 +62,31 @@ offset_left = 9.0
 offset_top = 536.0
 offset_right = 1034.0
 offset_bottom = 718.0
-scale = Vector2(0.315163, 0.315163)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 133
-text = "asdakhdasjdkas"
+scale = Vector2(0.203414, 0.203414)
+theme_override_fonts/font = ExtResource("3_ys1qc")
+theme_override_font_sizes/font_size = 349
+text = "1234 MPH"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+offset_left = 728.0
+offset_top = 5.0
+offset_right = 2234.0
+offset_bottom = 470.0
+scale = Vector2(0.156816, 0.156816)
+theme_override_fonts/font = ExtResource("3_ys1qc")
+theme_override_font_sizes/font_size = 349
+text = "1234 MPH"
 metadata/_edit_use_anchors_ = true
 
 [node name="Track 1" parent="." instance=ExtResource("4_ys1qc")]
+
+[node name="Start" parent="Track 1" index="4" node_paths=PackedStringArray("label_2")]
+label_2 = NodePath("../../CanvasLayer/Label2")
 
 [editable path="Node3D"]
 [editable path="Node3D/WheelFL"]
 [editable path="Node3D/WheelRL"]
 [editable path="Node3D/WheelFR"]
 [editable path="Node3D/WheelRR"]
+[editable path="Track 1"]

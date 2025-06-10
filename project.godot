@@ -94,4 +94,12 @@ Decrease={
 [physics]
 
 3d/run_on_separate_thread=true
+common/physics_jitter_fix=0.0
 3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+environment/ssao/quality=3
+anti_aliasing/quality/msaa_3d=2
+anti_aliasing/quality/screen_space_aa=1
+anti_aliasing/quality/use_taa=true

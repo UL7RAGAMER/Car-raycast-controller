@@ -26,7 +26,8 @@ extends RigidBody3D
 @export var fric_curve : Curve
 @export var drift_curve : Curve
 @export var steer_curve : Curve
-
+@export var cam_curve : Curve
+@onready var node_3d: Node3D = $Node3D
 
 @onready var label: Label = $"../CanvasLayer/Label"
 var max_turn = 1
@@ -49,13 +50,11 @@ func _ready() -> void:
 	wheels.append(WheelRL)
 	wheels.append(WheelRR)
 func _physics_process(delta: float) -> void:
-	accel_curve_apply()
-	
-	
-	label.text =  str(linear_velocity.dot(-global_basis.z))
+	accel_curve_apply()	
+	label.text =  str(round(linear_velocity.dot(-global_basis.z))) + "MPH"
 	steer_input = Input.get_action_strength("Left") - Input.get_action_strength("Right")
 	throttle_input = Input.get_action_strength("Up") - Input.get_action_strength("Down")
-	
+	cam_curve_apply()
 	if steer_input < 0:
 		ackerman_left = rad_to_deg(atan(wheel_base/(turn_radius + (rear_track / 2)))* steer_input)
 		ackerman_right = rad_to_deg(atan(wheel_base/(turn_radius -(rear_track / 2)))* steer_input)	
@@ -95,7 +94,12 @@ func _physics_process(delta: float) -> void:
 		pass
 	DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_horizontal)/40,Color.CHARTREUSE,0.5,true)
 	DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_vertical)/40,Color.DARK_BLUE,0.5,true)
-
+func cam_curve_apply():
+	var curr_lateral_velocity = linear_velocity.dot(global_basis.x)
+	var max_lateral_velocity = 20
+	var normalised_lateral_velocity = curr_lateral_velocity / max_lateral_velocity
+	var cam_multiplier = cam_curve.sample(normalised_lateral_velocity)
+	node_3d.rotation_degrees = lerp(node_3d.rotation_degrees,Vector3(0,20,0) * -steer_input * cam_multiplier,0.05)
 func apply_downforce(delta):
 
 

@@ -20,10 +20,7 @@ func is_point_inside_area(point: Vector3) -> bool:
 	para.collide_with_bodies = false
 	para.position = point
 	var result = space_state.intersect_point(para,1)
-	for hit in result:
-		if hit.collider is Area3D:
-			return true
-	return false
+	return result.size() > 0
 
 func _physics_process(delta: float) -> void:
 	if spawned:
@@ -39,6 +36,7 @@ func _physics_process(delta: float) -> void:
 			pos = Vector3(px,0,py)
 		var point_noise = noise.noise.get_noise_2d(px,py)
 		if point_noise>0.1:
-			multimesh.set_instance_transform(i,Transform3D(global_basis.scaled(Vector3.ONE * scale_no),pos))
+		
+			multimesh.set_instance_transform(i,Transform3D(Basis().scaled(Vector3.ONE * scale_no), pos))
 		elif fauna_no == 0:
-			multimesh.set_instance_transform(i,Transform3D(global_basis.scaled(Vector3.ONE * scale_no * randf_range(0,0.5)),pos))
+			multimesh.set_instance_transform(i,Transform3D(Basis().scaled(Vector3.ONE * scale_no*randf_range(0,0.5)), pos))

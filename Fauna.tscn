@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://skw81dayrpgl" path="res://multi_mesh_instance_3d.gd" id="2_cvoav"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2kp3r"]
+frequency = 0.0303
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0loke"]
 width = 1123
