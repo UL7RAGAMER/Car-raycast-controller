@@ -197,7 +197,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
-transform = Transform3D(1, 4.52535e-08, -1.68888e-07, 3.07906e-15, 0.965926, 0.258819, 1.74846e-07, -0.258819, 0.965926, 0.0157032, 3.19132, 5.78919)
+transform = Transform3D(1, 4.52535e-08, -1.68888e-07, 3.07906e-15, 0.965926, 0.258819, 1.74846e-07, -0.258819, 0.965926, 0.0157032, 3.19132, 6.47315)
 current = true
 
 [node name="FmodListener3D" type="FmodListener3D" parent="Node3D/Camera3D"]
@@ -206,7 +206,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 2.84621e-08, 0.945519, 0.325568, -8.
 [node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="Node3D/Camera3D"]
 event_name = "event:/SennaEngine"
 event_guid = "{7022665c-b1b3-4646-ac42-9dbb79a0aaeb}"
-autoplay = true
 fmod_parameters/Load/id = -3097630398083420546
 fmod_parameters/Load = 0.0
 fmod_parameters/Load/variant_type = 3

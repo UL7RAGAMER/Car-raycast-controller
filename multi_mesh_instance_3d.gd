@@ -11,6 +11,7 @@ func _ready() -> void:
 	multimesh.transform_format = 1
 	multimesh.instance_count = instances
 	multimesh.mesh = mesh
+	
 func is_point_inside_area(point: Vector3) -> bool:
 	var space_state = get_world_3d().direct_space_state
 	if space_state == null:
@@ -21,6 +22,7 @@ func is_point_inside_area(point: Vector3) -> bool:
 	para.position = point
 	var result = space_state.intersect_point(para,1)
 	return result.size() > 0
+
 
 func _physics_process(delta: float) -> void:
 	if spawned:
@@ -36,7 +38,7 @@ func _physics_process(delta: float) -> void:
 			pos = Vector3(px,0,py)
 		var point_noise = noise.noise.get_noise_2d(px,py)
 		if point_noise>0.1:
-		
+			
 			multimesh.set_instance_transform(i,Transform3D(Basis().scaled(Vector3.ONE * scale_no), pos))
 		elif fauna_no == 0:
 			multimesh.set_instance_transform(i,Transform3D(Basis().scaled(Vector3.ONE * scale_no*randf_range(0,0.5)), pos))

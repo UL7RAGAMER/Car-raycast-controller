@@ -1,9 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3ohkg1xi7ytr"]
+[gd_scene load_steps=18 format=3 uid="uid://c3ohkg1xi7ytr"]
 
 [ext_resource type="Script" uid="uid://bsbmqifb6kjui" path="res://telemetery.gd" id="1_ys1qc"]
 [ext_resource type="PackedScene" uid="uid://crf3r8pew363e" path="res://Scenes/senna.tscn" id="2_8od7v"]
-[ext_resource type="FontFile" uid="uid://d1duonqfygulb" path="res://Scripts/Dashhorizon-eZ5wg.otf" id="3_ys1qc"]
+[ext_resource type="FontFile" uid="uid://c8hf8gkjhc644" path="res://LilitaOne-Regular.ttf" id="3_0c07c"]
+[ext_resource type="Script" uid="uid://cr5twoqtrodyp" path="res://Scenes/start_menu.gd" id="4_35xla"]
 [ext_resource type="PackedScene" uid="uid://o6mku7rhft78" path="res://track_1.tscn" id="4_ys1qc"]
+[ext_resource type="AudioStream" uid="uid://cxvc0dtghv6n4" path="res://Models/Kemmei_Adachi_-_Mirage_(Hydr0.org).mp3" id="5_5wyu1"]
+[ext_resource type="AudioStream" uid="uid://ig2c3myfygi3" path="res://click-buttons-ui-menu-sounds-effects-button-7-203601.wav" id="5_i3aeo"]
+[ext_resource type="AudioStream" uid="uid://dcmticgk5ryxt" path="res://countdown.wav" id="7_0c07c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_32rh2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,10 +22,23 @@ sky = SubResource("Sky_cde0r")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ys1qc"]
+auto_exposure_enabled = true
+auto_exposure_scale = 0.24
+dof_blur_far_distance = 0.01
+
 [sub_resource type="Curve" id="Curve_qc4db"]
 _limits = [0.0, 1.0, -1.0, 1.0]
 _data = [Vector2(-1, 0.1), 0.0, 0.0, 0, 0, Vector2(0.00220752, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ys1qc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0c07c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2cgwh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_35xla"]
 
 [node name="Main" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33323, 0)
@@ -35,13 +52,14 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_np5n8")
+camera_attributes = SubResource("CameraAttributesPractical_ys1qc")
 script = ExtResource("1_ys1qc")
 
 [node name="FmodBankLoader" type="FmodBankLoader" parent="."]
 bank_paths = ["res://FMOD/Desktop/Master.bank"]
 
 [node name="Node3D" parent="." node_paths=PackedStringArray("WheelFL", "WheelFR", "WheelRR", "WheelRL", "fmod_event_emitter_3d") instance=ExtResource("2_8od7v")]
-transform = Transform3D(0.0746649, 0, 0.997209, 0, 1, 0, -0.997209, 0, 0.0746649, 252.442, 3.51667, -122.102)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 322.663, 3.51667, -115.457)
 horsepower = 900
 WheelFL = NodePath("WheelFL")
 WheelFR = NodePath("WheelFR")
@@ -56,33 +74,102 @@ cam_curve = SubResource("Curve_qc4db")
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_left = 9.0
-offset_top = 536.0
-offset_right = 1034.0
-offset_bottom = 718.0
+[node name="Speed" type="Label" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = -87.0
+offset_right = 1051.0
+offset_bottom = 313.0
+grow_vertical = 0
 scale = Vector2(0.203414, 0.203414)
-theme_override_fonts/font = ExtResource("3_ys1qc")
+theme_override_fonts/font = ExtResource("3_0c07c")
 theme_override_font_sizes/font_size = 349
-text = "1234 MPH"
-metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="CanvasLayer"]
+[node name="Best_lap" type="Label" parent="CanvasLayer"]
 offset_left = 728.0
 offset_top = 5.0
 offset_right = 2234.0
 offset_bottom = 470.0
 scale = Vector2(0.156816, 0.156816)
-theme_override_fonts/font = ExtResource("3_ys1qc")
+theme_override_fonts/font = ExtResource("3_0c07c")
 theme_override_font_sizes/font_size = 349
-text = "1234 MPH"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -526.0
+offset_top = -281.0
+offset_right = 1100.0
+offset_bottom = 583.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.638789, 0.638789)
+size_flags_horizontal = 4
+theme_override_constants/separation = 89
+script = ExtResource("4_35xla")
 metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 58
+theme_override_fonts/font = ExtResource("3_0c07c")
+theme_override_font_sizes/font_size = 236
+text = "RayCast Racer's"
+metadata/_edit_use_anchors_ = true
+
+[node name="Start" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 58
+theme_override_fonts/font = ExtResource("3_0c07c")
+theme_override_font_sizes/font_size = 181
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ys1qc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0c07c")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2cgwh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_35xla")
+text = "Start"
+
+[node name="Exit" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 58
+theme_override_fonts/font = ExtResource("3_0c07c")
+theme_override_font_sizes/font_size = 181
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ys1qc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0c07c")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2cgwh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_35xla")
+text = "Exit
+"
+
+[node name="Menu_Theme" type="AudioStreamPlayer" parent="CanvasLayer/VBoxContainer"]
+stream = ExtResource("5_5wyu1")
+volume_db = -13.539
+parameters/looping = true
+
+[node name="Button_click" type="AudioStreamPlayer3D" parent="CanvasLayer/VBoxContainer"]
+stream = ExtResource("5_i3aeo")
+volume_db = 70.0
+
+[node name="CountDown" type="AudioStreamPlayer3D" parent="CanvasLayer/VBoxContainer"]
+stream = ExtResource("7_0c07c")
+volume_db = 80.0
 
 [node name="Track 1" parent="." instance=ExtResource("4_ys1qc")]
 
 [node name="Start" parent="Track 1" index="4" node_paths=PackedStringArray("label_2")]
-label_2 = NodePath("../../CanvasLayer/Label2")
+label_2 = NodePath("../../CanvasLayer/Best_lap")
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Start" to="CanvasLayer/VBoxContainer" method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Exit" to="CanvasLayer/VBoxContainer" method="_on_exit_pressed"]
 
 [editable path="Node3D"]
 [editable path="Node3D/WheelFL"]

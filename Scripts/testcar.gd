@@ -29,7 +29,7 @@ extends RigidBody3D
 @export var cam_curve : Curve
 @onready var node_3d: Node3D = $Node3D
 
-@onready var label: Label = $"../CanvasLayer/Label"
+@onready var label: Label = $"../CanvasLayer/Speed"
 var max_turn = 1
 var ackerman_left : float= 0
 var ackerman_right : float = 0
@@ -40,6 +40,7 @@ var throttle_input
 var previous_velocity: Vector3 = Vector3.ZERO
 var fric_multiplier : float = 1
 var steer_multiplier : float = 1
+var is_in_title : bool = true
 @onready var marker_3d: Marker3D = $Marker3D
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
 func _ready() -> void:
@@ -54,7 +55,8 @@ func _physics_process(delta: float) -> void:
 	label.text =  str(round(linear_velocity.dot(-global_basis.z))) + "MPH"
 	steer_input = Input.get_action_strength("Left") - Input.get_action_strength("Right")
 	throttle_input = Input.get_action_strength("Up") - Input.get_action_strength("Down")
-	cam_curve_apply()
+	if !is_in_title:
+		cam_curve_apply()
 	if steer_input < 0:
 		ackerman_left = rad_to_deg(atan(wheel_base/(turn_radius + (rear_track / 2)))* steer_input)
 		ackerman_right = rad_to_deg(atan(wheel_base/(turn_radius -(rear_track / 2)))* steer_input)	
@@ -92,8 +94,9 @@ func _physics_process(delta: float) -> void:
 	apply_central_force(gravatational_force_vertical*0.1)
 	if WheelFL.is_colliding() or WheelFR.is_colliding() or WheelRL.is_colliding() or WheelRR.is_colliding():
 		pass
-	DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_horizontal)/40,Color.CHARTREUSE,0.5,true)
-	DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_vertical)/40,Color.DARK_BLUE,0.5,true)
+	if debug_wheels:
+		DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_horizontal)/40,Color.CHARTREUSE,0.5,true)
+		DebugDraw3D.draw_arrow(global_position ,global_position +  (gravatational_force_vertical)/40,Color.DARK_BLUE,0.5,true)
 func cam_curve_apply():
 	var curr_lateral_velocity = linear_velocity.dot(global_basis.x)
 	var max_lateral_velocity = 20
